@@ -26,6 +26,14 @@ body {
     gap: 1rem;
     width: 300px;
 }
+.textarea{
+    border-color: #001d3d;
+    outline-style: none;
+    border-radius: 4px;
+    padding: 0.5rem;
+    line-height: 1.5;
+}
+
 .radio-btn{
     display: flex;
     gap: 0.5rem;
@@ -53,6 +61,21 @@ input[type="radio"]:hover{
     background: #001d3d;
     color: #ccc;
     font-weight: bold;
+}
+.previous-btn{
+    padding: 1rem;
+    outline-style: none;
+    border: 1px solid #001d3d;
+    background: #fff;
+    color: #001d3d;
+    width: 5rem;
+    font-weight: bold;
+    border-radius: 4px;
+    text-align: center;
+}
+.btns{
+    display: flex;
+    justify-content: space-between;
 }
 .error {
     color: red;
