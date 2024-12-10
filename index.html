@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="form.css">
+    <title>Page 1</title>
+</head>
+<body>
+    <div class="auth-container">
+        <form id="form1" class="auth-form">
+            <h1 class="title">Page 1</h1>
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" class="form-input" required/>
+            <label for="email">Email</label>
+            <div id="emailError" class="error">Please enter a valid email address.</div>
+            <input type="email" id="email" name="email" class="form-input" required/>
+            <label for="country">Nationaliy</label>
+            <select name="country" class="form-input" id="country">
+                <option value="">Select a country</option>
+            </select>
+            <label for="gender">Gender:</label>
+            <ul class="radio-btn">
+                <li><input type="radio" id="male" name="male">M</li>
+                <li><input type="radio" id="female" name="female">F</li>
+            </ul>
+            <button type="submit" class="next-btn" id="next-btn">Next</button>
+        </form>
+    </div>
+    <script src="auth.js"></script>
+</body>
+</html>

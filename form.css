@@ -1,0 +1,63 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.auth-container {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.title{
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 300px;
+}
+.radio-btn{
+    display: flex;
+    gap: 0.5rem;
+    padding: 0;
+    margin-left: 0;
+}
+.radio-btn li{
+    list-style-type: none;
+}
+input[type="radio"]:hover{
+    cursor: pointer;
+}
+.form-input{
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline-style: none;
+    border-bottom-color: #001d3d;
+}
+.next-btn{
+    padding: 1rem;
+    outline-style: none;
+    border-radius: 4px;
+    width: 5rem;
+    background: #001d3d;
+    color: #ccc;
+    font-weight: bold;
+}
+.error {
+    color: red;
+    font-size: 0.9em;
+    margin-top: -5px;
+    margin-bottom: 10px;
+    display: none;
+}
