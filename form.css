@@ -33,7 +33,10 @@ body {
     padding: 0.5rem;
     line-height: 1.5;
 }
-
+.specify{
+    display: flex;
+    flex-direction: column;
+}
 .radio-btn{
     display: flex;
     gap: 0.5rem;

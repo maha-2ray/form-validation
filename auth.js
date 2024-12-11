@@ -1,122 +1,103 @@
-let formData = {};
-
-const updateFormData = (newData)=>{
-    formData = {...formData, ...newData}
-
-    const dataDisplay = document.createElement('div');
-    dataDisplay.id = 'data-display';
-    dataDisplay.style.marginTop = "20px";
-    dataDisplay.style.padding = "1rem";
-    dataDisplay.style.border = "1px solid #ccc";
-    dataDisplay.style.background = "#f9f9f9";
-
-    dataDisplay.innerHTML = `<h3>Collected Data</h3><pre>` + JSON.stringify(formData, null, 2) + `</pre>`;
-
-    const existingDisplay = document.getElementById('data-display');
-    if (existingDisplay) {
-        existingDisplay.remove();
-    }
-    document.body.appendChild(dataDisplay);
+const fetchCountries =  async () => {
+  try {
+    const response = await fetch('https://restcountries.com/v3.1/all');
+    const countries = await response.json();
+    const countrySelect = document.getElementById('country');
+    
+    countries.sort((a, b) => a.name.common.localeCompare(b.name.common));
+    
+    countries.forEach(country => {
+      const option = document.createElement('option');
+      option.value = country.name.common;
+      option.textContent = country.name.common;
+      countrySelect.appendChild(option);
+    });
+  } catch (error) {
+    console.error('Error fetching countries:', error);
+  }
+}
+const validateEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+const  toggleEmailError = (show) => {
+  const emailError = document.getElementById('emailError');
+  emailError.style.display = show ? 'block' : 'none';
 }
 
-const handleForm1 = (e) => {
-    e.defaultPrevented();
-
-    // Fetch countries from API
-  fetch('https://restcountries.com/v3.1/all?fields=name,cca3')
-  .then(response => {
-      if (!response.ok) {
-          throw new Error('Failed to fetch countries');
-      }
-      return response.json();
-  })
-  .then(data => {
-      data.sort((a, b) => a.name.common.localeCompare(b.name.common));
-
-      data.forEach(country => {
-          const option = document.createElement('option');
-          option.value = country.cca3;
-          option.textContent = country.name.common;
-          countrySelect.appendChild(option);
-      });
-  })
-  .catch(error => {
-      console.error('Error:', error);
-      countrySelect.innerHTML = '<option>Error loading countries</option>';
-  });
-  countrySelect.addEventListener('change', function() {
-    submitButton.disabled = !this.value;
-  });
-
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const submitButton = document.getElementById('next-btn');
-    const countrySelect = document.getElementById('country').value;
-    const gender = document.querySelector('input[name="gender"]:checked') ? document.querySelector('input[name="gender"]:checked').value : '';
-    const emailError = document.getElementById('emailError');
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const validateEmail = () =>{
-        const isValid = emailRegex.test(email.value);
-        if(!isValid){
-            emailError.style.display = 'block';
-            submitButton.disabled = true;
-        }else{
-            emailError.style.display = 'none';
-            submitButton.disabled = false;
-        }
-    return isValid;
+const toggleDisabilitySpecify = () => {
+  const specifyDisability = document.getElementById('specify-disability');
+  specifyDisability.style.display = document.getElementById('disability-yes').checked ? 'flex' : 'none';
 }
-email.addEventListener('input', validateEmail);
-
+const  toggleMedicalSpecify = () => {
+  const specifyMedical = document.getElementById('specify-medical');
+  specifyMedical.style.display = document.getElementById('medical-yes').checked ? 'flex' : 'none';
+}
+const collectFormData = (formId) => {
+  const form = document.getElementById(formId);
+  const formData = new FormData(form);
+  const data = {};
   
+  for (let [key, value] of formData.entries()) {
+    data[key] = value;
+  }
   
-    updateFormData({name, email, countrySelect, gender});
-
-    window.location.href = 'form2.html';
+  return data;
+}
+const displayCollectedData = (data) => {
+  const output = document.getElementById('output');
+  output.innerHTML = '<h2>Collected Data:</h2>';
+  
+  for (let [key, value] of Object.entries(data)) {
+    output.innerHTML += `<p><strong>${key}:</strong> ${value}</p>`;
+  }
 }
 
-const handleForm2 = (e) => {
-    e.defaultPrevented();
-
-    const hasDisability = document.getElementById('disability-yes').checked ? 'Yes' : 'No';
-    const disabilitySpecification = hasDisability === 'Yes' ? document.getElementById('specify-disability').querySelector('textarea').value : '';
-    const hasMedicalCondition = document.getElementById('medical-yes').checked ? 'Yes' : 'No';
-    const medicalSpecification = hasMedicalCondition === 'Yes' ? document.getElementById('specify-medical').querySelector('textarea').value : '';
-    
-    updateFormData({ hasDisability, disabilitySpecification, hasMedicalCondition, medicalSpecification });
-}
-
-const handleSpecificationVisibility = () =>{
-    const disabilityYes = document.getElementById('disability-yes');
-    const medicalYes = document.getElementById('medical-yes');
-    const specifyDisability = document.getElementById('specify-disability');
-    const specifyMedical = document.getElementById('specify-medical');
-    
-    if (disabilityYes && specifyDisability) {
-        disabilityYes.addEventListener('change', () => {
-            specifyDisability.style.display = disabilityYes.checked ? 'block' : 'none';
-        });
-    }
-    
-    if (medicalYes && specifyMedical) {
-        medicalYes.addEventListener('change', () => {
-            specifyMedical.style.display = medicalYes.checked ? 'block' : 'none';
-        });
-    }
-}
-
-//#####################################################################################################################################################
 document.addEventListener('DOMContentLoaded', () => {
-    const form1 = document.getElementById('form1');
-    const form2 = document.getElementById('form2');
+  const form1 = document.getElementById('form1');
+  const form2 = document.getElementById('form2');
+  
+  if (form1) {
+    fetchCountries();
     
-    if (form1) {
-        form1.addEventListener('submit', handleForm1);
-    }
+    const emailInput = document.getElementById('email');
+    emailInput.addEventListener('input', () => {
+      toggleEmailError(!validateEmail(emailInput.value));
+    });
     
-    if (form2) {
-        form2.addEventListener('submit', handleForm2);
-        handleSpecificationVisibility();
-    }
-
+    form1.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (validateEmail(emailInput.value)) {
+        const data = collectFormData('form1');
+        localStorage.setItem('form1Data', JSON.stringify(data));
+        window.location.href = 'form2.html';
+      }
+    });
+  }
+  
+  if (form2) {
+    const disabilityRadios = document.querySelectorAll('input[name="disability"]');
+    disabilityRadios.forEach(radio => {
+      radio.addEventListener('change', toggleDisabilitySpecify);
+    });
+    
+    const medicalRadios = document.querySelectorAll('input[name="medical"]');
+    medicalRadios.forEach(radio => {
+      radio.addEventListener('change', toggleMedicalSpecify);
+    });
+    
+    document.querySelector('.previous-btn').addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.href = 'index.html';
+    });
+    
+    form2.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data1 = JSON.parse(localStorage.getItem('form1Data'));
+      const data2 = collectFormData('form2');
+      const combinedData = { ...data1, ...data2 };
+      displayCollectedData(combinedData);
+    });
+  }
 });
+

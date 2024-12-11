@@ -7,7 +7,7 @@
     <title>Page 2</title>
 </head>
 <body>
-    <div class="auth-container">
+    <div class="auth-container" id="output">
         <form id="form2" class="auth-form">
             <h1 class="title">Page 2</h1>
             <label for="disability">Do you have any disability?</label>
@@ -15,18 +15,18 @@
                 <li><input type="radio" id="disability-yes" name="disability" value="Yes">Yes</li>
                 <li><input type="radio" id="disability-no" name="disability" value="No">No</li>
             </ul>
-            <div id="specify-disability">
-                <label for="specify">Please specify</label>
-                <textarea name="specify" id="specify" class="textarea" cols="10" rows="2"></textarea>
+            <div id="specify-disability" class="specify">
+                <label for="disability-specify">Please specify</label>
+                <textarea name="disability-specify" id="disability-specify" class="textarea" cols="10" rows="2"></textarea>
             </div> 
             <label for="medical">Do you have any medical condition?</label>
             <ul class="radio-btn">
                 <li><input type="radio" id="medical-yes" name="medical" value="Yes">Yes</li>
                 <li><input type="radio" id="medical-no" name="medical" value="No">No</li>
             </ul>    
-            <div id="specify-medical">
-                <label for="specify">Please specify</label>
-                <textarea name="specify" id="specify" class="textarea" cols="10" rows="2"></textarea>
+            <div id="specify-medical" class="specify">
+                <label for="medical-specify">Please specify</label>
+                <textarea name="medical-specify" id="medical-specify" class="textarea" cols="10" rows="2"></textarea>
             </div> 
             <div class="btns">
                 <button type="submit" class="previous-btn" id="next-btn">Previous</button>
