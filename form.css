@@ -87,3 +87,8 @@ input[type="radio"]:hover{
     margin-bottom: 10px;
     display: none;
 }
+@media (max-width: 956px){
+    .form-input{
+        padding: 1rem;
+    }
+}
